@@ -16,10 +16,16 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'custom-peach': '#FDEFE7',
+                'custom-blue': {
+                    DEFAULT: '#4172A9',
+                    'hover': '#4267B2',
+                },
+                // Añade más colores personalizados si es necesario
+            },
         },
     },
 
     plugins: [forms, typography],
 };
-
-

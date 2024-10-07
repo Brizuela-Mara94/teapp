@@ -3,10 +3,20 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\PatientController;
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('index');
+Route::get('/index/tea', function () {
+    return view('tea');
+})->name('index.tea');
+Route::get('/index/nosotros', function () {
+    return view('nosotros');
+})->name('index.nosotros');
+Route::get('/index/login', function () {
+    return view('auth.login');
+})->name('index.login');
 
 Route::middleware('permission:see-panel')->group(function () {
     Route::get('/dashboard', function () {
@@ -15,46 +25,8 @@ Route::middleware('permission:see-panel')->group(function () {
     Route::get('/pull-events', [EventController::class, 'pullEvents'])->name('pull-events');
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
+    Route::resource('patients', PatientController::class)->middleware('auth');
+
 });
 
 // Rutas de la aplicación del contador
-Route::get('/contador', function () {
-    $numero = 5;
-    return view('contador', compact('numero'));
-})->name('contador');
-
-Route::get('/contador/incrementar/{numero}', function ($numero) {
-    if ($numero >= 0 && $numero < 10) {
-        $numero++;
-    } else {
-        $mensaje = "El contador no puede ser mayor a 10";
-        return view('contador', compact('numero', 'mensaje'));
-    }
-    return view('contador', compact('numero'));
-})->name('contador.incrementar');
-
-Route::get('/contador/decrementar/{numero}', function ($numero) {
-    if ($numero > 0) {
-        $numero--;
-    } else {
-        $mensaje = "El contador no puede ser menor a 0";
-        return view('contador', compact('numero', 'mensaje'));
-    }
-    return view('contador', compact('numero'));
-})->name('contador.decrementar');
-
-Route::get('/contador/reiniciar', function () {
-    $numero=5;
-    return view('contador', compact('numero'));
-})->name('contador.reiniciar');
-
-Route::get('/contador/duplicar/{numero}', function ($numero) {
-    $numero = $numero * 2;
-    return view('contador', compact('numero'));
-})->name('contador.duplicar');
-
-Route::post('/contador/restablecer', function () {
-    $numero = request('valor', 5);
-    $numero = max(0, min($numero, 10));
-    return view('contador', compact('numero'));
-})->name('contador.restablecer');
