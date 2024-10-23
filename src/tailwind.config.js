@@ -17,11 +17,12 @@ export default {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                'custom-peach': '#FDEFE7',
-                'custom-blue': {
-                    DEFAULT: '#4172A9',
-                    'hover': '#4267B2',
-                },
+                'rosa': '#FDEFE7',
+                'celestito': '#f1f3ff',
+                'celeste': '#A0A8FF',
+                'celeste2': '#4172A9',
+                'azul': '#4267B2',
+                'verde': '#dcffd7',
                 // Añade más colores personalizados si es necesario
             },
         },

@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\ActivityController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
@@ -26,7 +27,7 @@ Route::middleware('permission:see-panel')->group(function () {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
     Route::resource('patients', PatientController::class)->middleware('auth');
-
+    Route::resource('activities', ActivityController::class)->middleware('auth');
 });
 
 // Rutas de la aplicación del contador

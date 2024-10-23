@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use App\Traits\ToastTrigger;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
+use App\Http\Requests\PatientRequest;
+
 
 class PatientController extends Controller
 {
+    use ToastTrigger;
     /**
      * Display a listing of the resource.
      */
@@ -26,20 +30,17 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) {
-        $request->validate([
-            'codigo' => 'required|unique:patients',
-            'apellidos' => 'required',
-            'nombres' => 'required',
-            'dni' => 'required|unique:patients',
-            'nacimiento' => 'required|date',
-            'sexo' => 'required',
-            'telefono' => 'required',
-            'email' => 'required|email|unique:patients',
-            'direccion' => 'required',
-        ]);
-        Patient::create($request->all());
-        return redirect()->route('patients.index');
+    public function store(PatientRequest $request)
+    {
+        // Los datos ya están validados en este punto
+        $validatedData = $request->validated();
+
+        // Crear un nuevo paciente con los datos validados
+        $patient = new Patient($validatedData);
+        $patient->save();
+
+        // Redirigir o devolver una respuesta
+        return redirect()->route('patients.index')->with('success', 'Paciente creado exitosamente.');
     }
 
     /**
